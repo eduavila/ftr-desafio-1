@@ -1,0 +1,32 @@
+services:
+  database:
+    image: postgres
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: ftr_desafio_dev238
+      POSTGRES_DB: ftr_desafio_dev
+      PGDATA: /var/lib/postgresql/data/pgdata
+    volumes:
+      - database:/var/lib/postgresql/data/pgdata
+    networks:
+      - backend
+      - database
+
+  app:
+    build: .
+    ports:
+      - 3333:3333
+    env_file:
+      - .env
+    networks:
+      - backend
+
+volumes:
+  database:
+networks:
+  backend:
+    driver: bridge
+  database:
+    driver: bridge

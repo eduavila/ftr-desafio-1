@@ -1,0 +1,22 @@
+body {
+  background-color: #f3f4f6;
+  width: 100%;
+}
+
+.root {
+  width: 100% !important;
+}
+
+@keyframes slide {
+  0% {
+    left: -33%;
+  }
+
+  100% {
+    left: 100%;
+  }
+}
+
+.animate-slide {
+  animation: slide 1.2s linear infinite;
+}
