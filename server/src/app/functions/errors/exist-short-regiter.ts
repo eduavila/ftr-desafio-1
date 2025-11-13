@@ -1,5 +1,5 @@
 export class ShortUrlAlreadyExists extends Error {
   constructor() {
-    super('There is a registered short URL.')
+    super('Existe um link encurtado registrado.')
   }
 }

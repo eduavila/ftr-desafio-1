@@ -1,5 +1,5 @@
 export class InvalidUrlFormat extends Error {
   constructor() {
-    super('Invalid url format.')
+    super('Formato de URL inválido.')
   }
 }
