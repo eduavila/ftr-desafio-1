@@ -10,7 +10,7 @@ import { DownloadSimple, Spinner } from "phosphor-react"
 import LoadingBar from './ui/loading-bar'
 
 export function LinksList() {
-    const { links, fetchAllLinks, fetchAllLinksLoading, exportLinksCSV, exportLinksCSVLoading} = useLinks();
+    const { links, fetchAllLinks, fetchAllLinksLoading, exportLinksCSV, exportLinksCSVLoading } = useLinks();
 
     useEffect(() => {
         fetchAllLinks();
@@ -23,14 +23,14 @@ export function LinksList() {
             window.open(fileUrl);
         } catch (err) {
             toast.error('Ops Ocorreu erro');
-        } 
+        }
     }
 
 
     return (
         <div className="bg-white rounded-xl shadow-sm border border-gray-100 w-full overflow-hidden">
             {fetchAllLinksLoading && <LoadingBar />}
-            <div className='p-8'>
+            <div className='p-8 w-full min-w-0"'>
                 <div className="flex items-start justify-between">
                     <h2 className="text-lg font-semibold text-gray-600">Meus links</h2>
                     <Button
@@ -40,10 +40,10 @@ export function LinksList() {
                         onClick={() => handlerExportLinksCSV()}
                         disabled={exportLinksCSVLoading}
                     >
-                        { exportLinksCSVLoading 
-                            ? <Spinner className="animate-spin text-gray-500" size={16}/>
-                            : <DownloadSimple size={16} className="text-gray-500"/>  }
-                        
+                        {exportLinksCSVLoading
+                            ? <Spinner className="animate-spin text-gray-500" size={16} />
+                            : <DownloadSimple size={16} className="text-gray-500" />}
+
                         Baixar CSV
                     </Button>
                 </div>
@@ -52,25 +52,30 @@ export function LinksList() {
 
                 {links.length == 0 && !fetchAllLinksLoading && <LinksEmpty></LinksEmpty>}
 
-                {links.length > 0 && !fetchAllLinksLoading 
-                    && <ScrollArea.Root type="scroll" className="overflow-hidden">
-                        <ScrollArea.Viewport
-                            className="h-[400px]">
-                            <ul className="divide-y divide-gray-200 border-t-1 mt-5 border-gray-200">
-                                {links.map((link: Link) => {
-                                    return (
-                                        <LinksListItem link={link} key={link.id} />
-                                    )
-                                })}
-                            </ul>
-                        </ScrollArea.Viewport>
-                        <ScrollArea.Scrollbar
-                            className="flex touch-none select-none p-0.5 transition-colors duration-[160ms] ease-out data-[orientation=horizontal]:h-2.5 data-[orientation=vertical]:w-2.5 data-[orientation=horizontal]:flex-col"
+                {links.length > 0 && !fetchAllLinksLoading
+                    && <div className="flex min-w-0">
+                        <ScrollArea.Root className="flex-1 overflow-hidden mt-5">
+                            <ScrollArea.Viewport
+                                className="h-[400px] w-full min-w-0 flex flex-col">
+                                <div className="flex flex-col min-w-0 w-full pr-3">
+                                    <ul className="divide-y divide-gray-200 border-t-1 border-gray-200 w-full">
+                                        {links.map((link: Link) => {
+                                            return (
+                                                <LinksListItem link={link} key={link.id} />
+                                            )
+                                        })}
+                                    </ul>
+                                </div>
+                            </ScrollArea.Viewport>
+                          <ScrollArea.Scrollbar
                             orientation="vertical"
-                        >
-                            <ScrollArea.Thumb className="relative flex-1 bg-blue-base before:absolute before:left-1/2 before:top-1/2 before:size-full before:min-h-11 before:min-w-11 before:-translate-x-1/2 before:-translate-y-1/2" />
-                        </ScrollArea.Scrollbar>
-                    </ScrollArea.Root>
+                            forceMount
+                            className="flex p-0.5 w-2.5 bg-gray-100 hover:bg-gray-200"
+                            >
+                            <ScrollArea.Thumb className="flex-1 bg-blue-base rounded-full" />
+                            </ScrollArea.Scrollbar>
+                        </ScrollArea.Root>
+                    </div>
                 }
             </div>
         </div>

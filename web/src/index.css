@@ -26,3 +26,8 @@ body {
 body > .root{
   width: 100%;
 }
+
+[data-radix-scroll-area-viewport] > div[style*="display: table"] {
+  display: block !important;
+  min-width: 100% !important;
+}

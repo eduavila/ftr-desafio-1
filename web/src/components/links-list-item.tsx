@@ -44,17 +44,16 @@ export function LinksListItem({ link }: LinksListItemProps) {
   }
 
   return (
-    <li className="py-4 flex items-center justify-between">
-      <div className='pr-4'>
+    <li className="py-4 flex items-center justify-between min-w-0">
+      <div className='pr-4 flex flex-col min-w-0 flex-1'>
         <button onClick={() => onVisitedLink(link)}
-          className="text-blue-base text-md font-medium hover:underline">
+          className="text-blue-base text-md font-medium hover:underline truncate block w-full text-left">
           brev.ly/{link.shortCode}
         </button>
-        <p className="text-sm text-gray-500">{link.originalUrl}</p>
+        <p className="text-sm text-gray-500 truncate w-full">{link.originalUrl}</p>
       </div>
-      <div className="flex items-center gap-2">
+      <div className="flex items-center gap-2 flex-shrink-0">
         <span className="text-sm text-gray-500 whitespace-nowrap">{link.visitCount} acessos</span>
-
         <Button
           size="icon-sm"
           className="text-xs"
