@@ -3,6 +3,8 @@ import { schema } from '@/infra/db/schemas'
 import { type Either, makeRight } from '@/infra/shared/either'
 import { uploadFileToStorage } from '@/infra/storage/upload-file-to-storage';
 import { stringify } from 'csv-stringify';
+import { format } from 'date-fns';
+import { ptBR } from 'date-fns/locale';
 import { PassThrough, Transform } from 'node:stream';
 import { pipeline } from 'node:stream/promises';
 
@@ -43,9 +45,15 @@ export async function exportLinksCSV(): Promise<Either<never, exportLinksCSV>> {
         cursor,
         new Transform({
         objectMode: true,
-        transform(chunks: unknown[], encoding, callback) {
+        transform(chunks: any[], encoding, callback) {
             for (const chunk of chunks) {
-            this.push(chunk)
+                const formatted = {
+                    ...chunk,
+                    createdAt: chunk.createdAt
+                    ? format(new Date(chunk.createdAt), 'yyyy-MM-dd HH:mm:ss')
+                    : '',
+                };
+                this.push(formatted);
             }
 
             callback()
@@ -63,7 +71,6 @@ export async function exportLinksCSV(): Promise<Either<never, exportLinksCSV>> {
     })
 
     const [{ url }] = await Promise.all([uploadToStorage, convertToCSVPipeline])
-    
     return makeRight({
         fileUrl: url
     })

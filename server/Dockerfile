@@ -1,6 +1,6 @@
 FROM node:23-alpine AS base
 
-RUN npm i -g pnpm
+RUN  npm config set registry https://registry.npmmirror.com && npm i -g pnpm
 
 FROM base AS dependencies
 
